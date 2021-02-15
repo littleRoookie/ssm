@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:component-scan base-package="cn.uestc"/>
+    
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--引入jQuery失败是因为前端控制器会拦截到除了.jsp之外的所有请求-->
+    <!--告诉SpringMVC,自己能处理的请求就自己处理，不能就拉倒-->
+    <mvc:default-servlet-handler/>
+    <!--但是这样做了后静态资源能访问，动态映射又不行了，开启开挂模式-->
+    <mvc:annotation-driven/>
+
+    <!--配置文件上传解析器，名字固定-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="#{1024*1024*20}"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+</beans>

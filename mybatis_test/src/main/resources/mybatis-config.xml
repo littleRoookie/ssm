@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <environments default="development">
+        <environment id="development">
+            <!--配置事务管理-->
+            <transactionManager type="JDBC"/>
+            <!--配置数据源-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis_0325?useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="gzx5320414"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--引入我们编写每一接口的实现xml文件-->
+    <mappers>
+        <!--resource表示从类路径（就是资源文件路径）下找资源-->
+        <package name="cn.uestc.dao" />
+    </mappers>
+</configuration>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace:写Dao的全类名，相当于是告诉MyBatis这个配置文件是实现哪一个接口-->
+<mapper namespace="cn.uestc.dao.TeacherDao">
+    <insert id="addTeacher" useGeneratedKeys="true" keyProperty="id">
+        insert into t_teacher(`name`,`lesson`) values (#{name},#{lesson})
+    </insert>
+
+    <delete id="deleteTeacher">
+        delete from t_teacher where id=#{id}
+    </delete>
+
+    <update id="updateTeacher">
+        update  t_teacher set `name`=#{name}, `lesson`=#{lesson} where id=#{id}
+    </update>
+
+    <select id="getTeacher" resultType="cn.uestc.bean.Teacher">
+        select * from t_teacher where id=#{id}
+    </select>
+
+    <select id="getTeacherByIdAndName" resultType="cn.uestc.bean.Teacher">
+        select * from t_teacher where id=#{arg0} and name=#{arg1}
+    </select>
+
+    <select id="getTeacherByMap" resultType="cn.uestc.bean.Teacher">
+        select * from t_teacher where id=#{id} and name=#{name}
+    </select>
+
+    <select id="getTeachers" resultType="cn.uestc.bean.Teacher">
+        select * from t_teacher
+    </select>
+
+    <select id="getTeacherByIdReturnMap" resultType="map">
+        select * from t_teacher where id=#{id}
+    </select>
+
+    <select id="getTeachersReturnMap" resultType="cn.uestc.bean.Teacher">
+        select * from t_teacher
+    </select>
+
+    <resultMap id="teacherMap" type="cn.uestc.bean.Teacher">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="lesson" column="lesson"/>
+    </resultMap>
+
+    <select id="getTeacherByCondition" resultMap="teacherMap">
+
+        select  * from t_teacher
+        <!-- prefix:为下面合起来的sql语句添加一个前缀，
+        prefixOvverides:去除整体sql语句多的  -->
+        <trim prefix="where" prefixOverrides="and" suffix="" suffixOverrides="and">
+            <!-- test里面 id!=null 这个id是从方法参数的位置传递过来的 -->
+            <if test="id != null">
+                id=#{id} and
+            </if>
+            <!-- 不为空，也不为空串， and使用，要想使用&&得使用转义字符&amp;
+             里面也支持非常强大的判断条件，OGNL表达式-->
+            <if test="name != null and !name.equals(&quot;&quot;)">
+                `name` like #{name} and
+            </if>
+            <if test="lesson != null">
+                lesson = #{lesson} and
+            </if>
+        </trim>
+
+    </select>
+
+    <!--List<Teacher> getTeacherIn(List<Integer> idList);-->
+    <!--SELECT * FROM t_teacher WHERE `id` IN (1,2,6);-->
+    <!--list类型的参数要指定参数名@Param-->
+    <!--
+    collection:要遍历的集合
+    close:以什么结束
+    index:如果遍历的是一个List则保存的是当前索引；如果遍历的是一个key，则保存的是当前遍历元素的key，此时的item就是value
+    item:集合中的元素的变量名
+    open:以什么开始
+    separator:分隔符
+
+    -->
+    <select id="getTeacherIn" resultMap="teacherMap">
+        select * from t_teacher
+        <where>
+        id in
+            <foreach collection="idList" close=")" index="" item="id_item" open="(" separator=",">
+                #{id_item}
+            </foreach>
+        </where>
+    </select>
+
+    <!--choose-when 就是进入了一个就不进入其它的了-->
+    <select id="getTeacherByConditionChoose" resultMap="teacherMap">
+        select * from t_teacher
+        <where>
+            <choose>
+                <when test="id != null">
+                   and id=#{id}
+                </when>
+                <when test="name != null and !name.equals(&quot;&quot;)">
+                   and name=#{name}
+                </when>
+                <otherwise>
+                   and 1=1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+      
+</mapper>

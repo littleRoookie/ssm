@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mybatis_test" />
+        <module name="springMVC" />
+        <module name="mbg" />
+        <module name="RESR_CRUD" />
+        <module name="ssm_union" />
+        <module name="interceptor_i18n_exception" />
+        <module name="myBatis" />
+        <module name="spring" />
+        <module name="ssm" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

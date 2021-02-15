@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        
+    <!--开启组件扫描-->
+    <context:component-scan base-package="cn.uestc"/>
+    
+    <!--配置一个视图解析器，能帮我们拼接页面地址-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    </bean>
+
+    <bean class="cn.uestc.viewResolver.MyViewResolver">
+        <property name="order" value="1"/>
+    </bean>
+
+    <!--path就是请求的路径（即@requestMapping里面的信息），view-name就是请求去的页面（相当于return的字符串，也会接受拼接）-->
+    <mvc:view-controller path="/testVC" view-name="success"/>
+    <!--但是配置了这个会出现其他的请求失效的问题，需要开启MVC注解驱动模式-->
+    <mvc:annotation-driven/>
+    
+</beans>

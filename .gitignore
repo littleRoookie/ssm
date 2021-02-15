@@ -1,0 +1,7 @@
+# Project exclude paths
+/interceptor_i18n_exception/target/
+/mbg/target/
+/mybatis_test/target/
+/RESR_CRUD/target/
+/spring/target/
+/springMVC/target/

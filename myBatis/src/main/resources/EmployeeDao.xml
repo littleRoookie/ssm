@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace:写Dao的全类名，相当于是告诉MyBatis这个配置文件是实现哪一个接口-->
+<mapper namespace="cn.uestc.dao.EmployeeDao">
+    <!--Employee getEmpById(Integer id)
+        id:相当于是方法名，相当于是对某个方法的实现
+        resultType：指定方法运行后的返回值类型（查询操作必须指定，写全类名）-->
+    <!--执行sql查询的标签体内除了sql语句什么都不能写，因为里面所有内容都是传到mysql那边进行解析的，这里的注释就不能生效了-->
+    <select id="getEmpById" resultType="cn.uestc.bean.Employee">
+    select * from t_employee where id = #{id}
+    </select>
+    <insert id="addEmployee">
+    insert into t_employee(username,gender,email) values(#{username},#{gender},#{email})
+    </insert>
+    <update id="updateEmployee">
+        update t_employee set username=#{username},gender=#{gender},email=#{email} where id=id=#{id}
+    </update>
+    <delete id="deleteEmployee">
+        delete from t_employee where id=#{id}
+    </delete>
+
+</mapper>
